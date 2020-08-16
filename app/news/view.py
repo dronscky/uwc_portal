@@ -2,7 +2,7 @@ from flask import render_template, abort
 from flask import Blueprint
 from jinja2 import TemplateNotFound
 
-# from models import Post
+from models import Post
 
 
 news = Blueprint('news', __name__, 
@@ -12,10 +12,8 @@ news = Blueprint('news', __name__,
 @news.route('/')
 def index():
 	try:
-		# создать запрос 6ти последних статей в БД с названием статьи,
-		# с куском статьи в 100 символов и пути к изображению
-		posts = Post.query.order_by(Post.created.desc()).limit(6)
+		posts = Post.query.order_by(Post.created.desc()).limit(8)
 
-		return render_template('news/index.html')
+		return render_template('news/index.html',posts=posts)
 	except TemplateNotFound:
 		abort(404)
